@@ -1,0 +1,128 @@
+drop database if exists tennisClub;
+Create database tennisClub;
+use tennisClub;
+
+Create table members(
+id integer auto_increment,
+firstname varchar(30),
+surname varchar(30),
+memberType varchar(6),
+dateOfBirth date,
+memberpic longblob,
+primary key(id)
+memberpic longblob,
+);
+
+Create table courts(
+id integer auto_increment,
+surface VARCHAR(30),
+floodlights boolean,
+indoor boolean,
+primary key(id)
+);
+
+Create table bookings(
+id integer auto_increment,
+bookingDate date,
+startTime time,
+endTime time,
+memberId INT,
+courtId INT,
+fee DECIMAL(18,3),
+primary key(id),
+foreign key(memberId) references members(id),
+foreign key (courtId) references courts(id)
+);
+
+CREATE TABLE membershipType(
+membershipType VARCHAR(30),
+courtHourlyFee DECIMAL(10,2),
+primary key (membershipType));
+
+CREATE TABLE memberImage(
+id INT auto_increment,
+memberId INT,
+description VARCHAR(30),
+imagefile longblob,
+primary key (id),
+foreign key(memberId) references members(id));
+
+-------------------------------------------------
+
+DROP VIEW if exists event;
+CREATE VIEW event AS
+SELECT CONCAT(members.firstname," ",members.surname) AS title,
+CONCAT(DATE_FORMAT(bookingDate,'%Y-%m-%d'), "T", StartTime) AS start,
+CONCAT(DATE_FORMAT(bookingDate,'%Y-%m-%d'), "T", EndTime) AS end,
+CONCAT("Court: " , courts.id) AS venue,
+bookings.id AS id
+FROM members,courts,bookings
+WHERE members.id = bookings.memberId AND courts.id = bookings.courtId;
+
+-------------------------------------------------
+
+DROP TABLE if exists courtRating;
+CREATE TABLE courtRating(
+id INT AUTO_INCREMENT,
+rating INT,
+comment TEXT,
+createdAt DATETIME,
+courtId INT,
+primary key(id),
+foreign key(courtId) references courts(id));
+
+-------------------------------------------------
+
+CREATE VIEW datapoints AS
+SELECT CONCAT(firstname," ",surname) AS label,
+COUNT(bookings.memberId) AS y 
+FROM members,bookings 
+WHERE members.id = bookings.memberId
+GROUP BY label
+
+------------------------------------------------
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(
+id INT AUTO_INCREMENT,
+username VARCHAR(45),
+password VARCHAR(100),
+firstname VARCHAR(45),
+surname VARCHAR(45),
+emailAddress VARCHAR(100),
+role VARCHAR(70),
+validationKey VARCHAR(255),
+status VARCHAR(2550),
+createdAt DATETIME,
+updatedAt DATETIME,
+primary key(id));
+
+-----------------------------------------------
+
+DROP TABLE IF EXISTS dbaccessControlList;
+DROP TABLE IF EXISTS dbaction;
+DROP TABLE IF EXISTS dbresource;
+DROP TABLE IF EXISTS dbrole;
+
+CREATE TABLE dbrole(
+role VARCHAR(40),
+description VARCHAR(160),
+primary key(role));
+
+CREATE TABLE dbresource(
+resource VARCHAR(40),
+primary key(resource));
+
+CREATE TABLE dbaction(
+resource VARCHAR(40),
+action VARCHAR(40),
+primary key(resource,action),
+foreign key(resource) references dbresource(resource));
+
+CREATE TABLE dbaccessControlList(
+role VARCHAR(40),
+action VARCHAR(40),
+resource VARCHAR(40),
+primary key(role,action,resource),
+foreign key(role) references dbrole(role),
+foreign key(resource,action) references dbaction(resource,action));

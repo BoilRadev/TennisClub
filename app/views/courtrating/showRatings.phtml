@@ -1,0 +1,26 @@
+<div class="page-header">
+    <h1>Court Ratings</h1>
+</div>
+<?php echo $this->getContent(); ?>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Created at</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($courtratings as $courtrating): ?>
+            <tr>
+                <td><?php echo $courtrating->getId() ?></td>
+                <td><?php echo $courtrating->getRating() ?></td>
+                <td><?php echo $courtrating->getComment() ?></td>
+                <td><?php echo $courtrating->getCreatedat() ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

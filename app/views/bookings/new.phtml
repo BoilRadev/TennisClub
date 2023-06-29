@@ -1,0 +1,88 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["bookings", "Go Back"]) ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>
+        Create bookings
+    </h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "bookings/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldBookingDate" class="col-sm-2 control-label">Booking Of Date</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->dateField(["bookingDate", "type" => "date", "class" => "form-control", "id" => "fieldBookingDate"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldStartTime" class="col-sm-2 control-label">Start Of Time</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->timeField(["startTime", "size" => 30, "class" => "form-control", "id" => "fieldStartTime"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldEndTime" class="col-sm-2 control-label">End Of Time</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->timeField(["endTime", "size" => 30, "class" => "form-control", "id" => "fieldEndTime"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldMemberId" class="col-sm-2 control-label">Member</label>
+    <div class="col-sm-10">
+       <select name="memberId" id="fieldMemberId" class="form-control">
+			<?php foreach ($members as $member){ echo "<option value ='" . $member->getId() . "'>$member</option>"; } ?>
+	   </select>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldCourtId" class="col-sm-2 control-label">Court</label>
+    <div class="col-sm-10">
+        <select name="courtId" id="fieldCourtId" class="form-control">
+            <?php foreach ($courts as $court) {
+                echo "<option value='" . $court->getId() . "'>$court</option>";
+            } ?>
+        </select>
+    </div>
+</div>
+
+<!--<div class="form-group">-->
+<!--    <label for="fieldFee" class="col-sm-2 control-label">Fee</label>-->
+<!--    <div class="col-sm-10">-->
+<!--        --><?php //echo $this->tag->textField(["fee", "type" => "number", "class" => "form-control", "id" => "fieldFee"]) ?>
+<!--    </div>-->
+<!--</div>-->
+
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(["Save", "class" => "btn btn-default"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

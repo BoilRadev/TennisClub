@@ -1,0 +1,70 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="page-header">
+    <h1>
+        Search courtRating
+    </h1>
+    <p>
+        <?php echo $this->tag->linkTo(["courtRating/new", "Create courtRating"]) ?>
+    </p>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "courtRating/search",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldId" class="col-sm-2 control-label">Id</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["id", "type" => "number", "class" => "form-control", "id" => "fieldId"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldRating" class="col-sm-2 control-label">Rating</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["rating", "type" => "number", "class" => "form-control", "id" => "fieldRating"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldComment" class="col-sm-2 control-label">Comment</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textArea(["comment", "cols" => 30, "rows" => 4, "class" => "form-control", "id" => "fieldComment"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldCreatedat" class="col-sm-2 control-label">CreatedAt</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["createdAt", "size" => 30, "class" => "form-control", "id" => "fieldCreatedat"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldCourtid" class="col-sm-2 control-label">CourtId</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["courtId", "type" => "number", "class" => "form-control", "id" => "fieldCourtid"]) ?>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(["Search", "class" => "btn btn-default"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

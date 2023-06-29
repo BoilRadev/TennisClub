@@ -1,0 +1,59 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<?php
+    $this->assets->outputCss("rating");
+    $this->assets->outputJs("rating");
+?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["courtRating", "Go Back"]) ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>
+        Create courtRating
+    </h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "courtRating/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<input type="hidden" name="courtId" id="fieldCourtId" value="<?php echo $courtId ?>">
+
+<div class="form-group">
+    <label for="fieldRating" class="col-sm-2 control-label">Rating</label>
+    <div class="col-sm-10">
+        <input type="text" id="fieldRating" name="rating" value="0" class="rating" data-min=0 data-max=5 data-step=1 data-size="sm">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldComment" class="col-sm-2 control-label">Comment</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textArea(["comment", "cols" => 30, "rows" => 4, "class" => "form-control", "id" => "fieldComment"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(["Save", "class" => "btn btn-default"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

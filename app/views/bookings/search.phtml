@@ -1,0 +1,74 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["bookings/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["bookings/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Booking Of Date</th>
+                <th>Start Of Time</th>
+                <th>End Of Time</th>
+                <th>Member</th>
+                <th>Court</th>
+                <th>Fee</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $booking): ?>
+            <tr>
+                <td><?php echo $booking->getId() ?></td>
+            <td><?php echo $booking->getBookingDate() ?></td>
+            <td><?php echo $booking->getStartTime() ?></td>
+            <td><?php echo $booking->getEndTime() ?></td>
+            <td><?php echo $booking->getMemberId() ?></td>
+            <td><?php echo $booking->getCourtId() ?></td>
+            <td><?php echo $booking->getFee() ?></td>
+
+                <td><?php echo $this->tag->linkTo(["bookings/edit/" . $booking->getId(), "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["bookings/delete/" . $booking->getId(), "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("bookings/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("bookings/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("bookings/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("bookings/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>
